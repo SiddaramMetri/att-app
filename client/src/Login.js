@@ -32,7 +32,7 @@ const Login = (props) => {
     if (validate()) {
       let inputobj = { username: username, password: password };
       axios
-        .post("http://localhost:4144/api/login", inputobj)
+        .post("/api/login", inputobj)
         .then((res) => {
           console.log(res);
           if (!res.data.token) {
