@@ -1,9 +1,10 @@
+const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const multer = require("multer");
 const csvtojson = require("csvtojson");
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
 
