@@ -16,7 +16,7 @@ const StudentsList = (props) => {
     const result = e.target.value;
     setSearch(result);
     axios
-      .get(`http://localhost:4144/api/search?text=${result}`)
+      .get(`/api/search?text=${result}`)
       .then((res) => {
         const result = res.data;
 

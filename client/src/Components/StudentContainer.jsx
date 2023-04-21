@@ -10,7 +10,7 @@ const StudentContainer = (props) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4144/api/students")
+      .get("/api/students")
       .then((res) => {
         const result = res.data;
         setStudents(result);

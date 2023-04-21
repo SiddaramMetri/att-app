@@ -14,9 +14,7 @@ const LiveSessionDetails = (props) => {
 
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:4144/api/batches/${batchesId}/attendances/${attendanceId}`
-      )
+      .get(`/api/batches/${batchesId}/attendances/${attendanceId}`)
       .then((res) => {
         console.log(res.data);
         setLiveSessionStudents(res.data);

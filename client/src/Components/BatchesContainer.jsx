@@ -8,7 +8,7 @@ const BatchesContainer = (props) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4144/api/batches")
+      .get("/api/batches")
       .then((res) => {
         const result = res.data;
         setBatches(result);

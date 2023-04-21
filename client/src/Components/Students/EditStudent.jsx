@@ -15,7 +15,7 @@ const EditStudent = (props) => {
 
   const formSubmission = (formData) => {
     axios
-      .put(`http://localhost:4144/api/students/${formData.id}`, formData)
+      .put(`/api/students/${formData.id}`, formData)
       .then((res) => {
         const result = res.data;
         editStudent(result);

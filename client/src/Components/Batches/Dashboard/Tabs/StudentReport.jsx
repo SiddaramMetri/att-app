@@ -18,9 +18,7 @@ const StudentReport = (props) => {
   // Attendance Student Report
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:4144/api/batches/students/${studentId}/attendances`
-      )
+      .get(`/api/batches/students/${studentId}/attendances`)
       .then((res) => {
         const result = res.data;
         console.log(result);
@@ -34,7 +32,7 @@ const StudentReport = (props) => {
   // Student
   useEffect(() => {
     axios
-      .get(`http://localhost:4144/api/students/${studentId}`)
+      .get(`/api/students/${studentId}`)
       .then((res) => {
         const result = res.data;
         setStudent(result);
@@ -48,9 +46,7 @@ const StudentReport = (props) => {
   // StudentAttendance Count
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:4144/api/batches/students/${studentId}/attendanceCount`
-      )
+      .get(`/api/batches/students/${studentId}/attendanceCount`)
       .then((res) => {
         const result = res.data;
         console.log(result);

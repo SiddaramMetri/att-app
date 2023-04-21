@@ -7,7 +7,7 @@ const AssignBatchStudent = (props) => {
 
   const handleAssign = (id) => {
     axios
-      .post(`http://localhost:4144/api/batches/${batchesId}/students`, {
+      .post(`api/batches/${batchesId}/students`, {
         studentId: id,
       })
       .then((res) => {

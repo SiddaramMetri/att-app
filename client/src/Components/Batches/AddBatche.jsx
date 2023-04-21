@@ -6,7 +6,7 @@ const AddBatches = (props) => {
 
   const formSubmission = (batches) => {
     axios
-      .post("http://localhost:4144/api/batches", batches)
+      .post("/api/batches", batches)
       .then((res) => {
         const result = res.data;
         addBatches(result);

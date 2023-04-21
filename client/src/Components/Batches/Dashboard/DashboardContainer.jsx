@@ -28,9 +28,7 @@ const DashboardContainer = (props) => {
   // Student
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:4144/api/search/${batchesId}/students?text=${search}`
-      )
+      .get(`/api/search/${batchesId}/students?text=${search}`)
       .then((res) => {
         setBatcheStudents(res.data);
       })
@@ -42,7 +40,7 @@ const DashboardContainer = (props) => {
   // Fetch Batch Info
   useEffect(() => {
     axios
-      .get(`http://localhost:4144/api/batches/${batchesId}`)
+      .get(`/api/batches/${batchesId}`)
       .then((res) => {
         const result = res.data;
         if (result === null) {
@@ -61,7 +59,7 @@ const DashboardContainer = (props) => {
   // Assign Batch Tab
   useEffect(() => {
     axios
-      .get(`http://localhost:4144/api/batche/students`)
+      .get(`/api/batche/students`)
       .then((res) => {
         const result = res.data;
         setAllStudentData(result);
@@ -74,7 +72,7 @@ const DashboardContainer = (props) => {
   // Get Batches Students
   useEffect(() => {
     axios
-      .get(`http://localhost:4144/api/batche/${batchesId}/students`)
+      .get(`/api/batche/${batchesId}/students`)
       .then((res) => {
         const result = res.data;
         setBatcheStudents(result);
@@ -87,7 +85,7 @@ const DashboardContainer = (props) => {
   // AttendanceTab
   useEffect(() => {
     axios
-      .get(`http://localhost:4144/api/batches/${batchesId}/attendance`)
+      .get(`/api/batches/${batchesId}/attendance`)
       .then((res) => {
         const result = res.data;
         setAttendanceTab(result);
@@ -100,7 +98,7 @@ const DashboardContainer = (props) => {
   // Get Attendance  Report Tab
   useEffect(() => {
     axios
-      .get(`http://localhost:4144/api/batches/${batchesId}/attendanceReports`)
+      .get(`/api/batches/${batchesId}/attendanceReports`)
       .then((res) => {
         setAttendanceReport(res.data);
       })
@@ -125,7 +123,7 @@ const DashboardContainer = (props) => {
     console.log("_id", _id);
 
     axios
-      .put(`http://localhost:4144/api/batch/${batchesId}/student/${_id}`, {
+      .put(`/api/batch/${batchesId}/student/${_id}`, {
         trace: status,
       })
       .then((res) => {
@@ -144,7 +142,7 @@ const DashboardContainer = (props) => {
   // student Trace Report
   const handleTraceStudent = () => {
     axios
-      .get(`http://localhost:4144/api/batche/${batchesId}/attendanceReport`)
+      .get(`/api/batche/${batchesId}/attendanceReport`)
       .then((res) => {
         setAttendanceReport(res.data);
       })

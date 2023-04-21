@@ -28,11 +28,7 @@ const AttendanceUpload = (props) => {
     formData.append("file", selectedFile);
 
     axios
-      .post(
-        `http://localhost:4144/api/batc
-        hes/${batchesId}/uploadattendace`,
-        formData
-      )
+      .post(`/api/batches/${batchesId}/uploadattendace`, formData)
       .then((res) => {
         if (!res.data.success) {
           alert(res.data.message);

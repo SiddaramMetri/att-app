@@ -28,7 +28,7 @@ const AttendanceAdd = (props) => {
         };
 
         axios
-          .post("http://localhost:4144/api/attendance", formDatas)
+          .post("/api/attendance", formDatas)
           .then((res) => {
             addAttendance(res.data);
             alert("Attendance Added");

@@ -34,7 +34,7 @@ const TabsContainer = (props) => {
   const handleCalendarDateClick = (id, ids) => {
     setIsModalOpen(true);
     axios
-      .get(`http://localhost:4144/api/batches/${batchesId}/attendances/${id}`)
+      .get(`/api/batches/${batchesId}/attendances/${id}`)
       .then((res) => {
         setLiveStudentsAttendance(res.data);
       })

@@ -5,7 +5,7 @@ const AddStudent = (props) => {
 
   const formSubmission = (formData) => {
     axios
-      .post("http://localhost:4144/api/students", formData)
+      .post("/api/students", formData)
       .then((res) => {
         // const result = res.data;
         if (res.data.hasOwnProperty("errors")) {

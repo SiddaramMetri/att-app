@@ -14,7 +14,7 @@ const EditBatches = (props) => {
 
   const formSubmission = (batches) => {
     axios
-      .put(`http://localhost:4144/api/batches/${batches.id}`, batches)
+      .put(`/api/batches/${batches.id}`, batches)
       .then((res) => {
         const result = res.data;
         editBatches(result);
