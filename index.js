@@ -361,88 +361,88 @@ app.post("/api/attendance", (req, res) => {
 });
 // Attendance check form CSVtoJSON
 // Attendance CSVtoJSON and get back
-app.post(
-  "/api/batches/:id/uploadattendace",
-  upload.single("file"),
-  (req, res) => {
-    const { id } = req.params;
-    csvtojson()
-      .fromFile(req.file.path)
-      .then((csvData) => {
-        Batch.findById(id)
-          .populate("students.studentId", "name")
-          .then((batch) => {
-            if (!batch) {
-              return res.json({
-                success: false,
-                message: "Batch not found",
-                batchId: id,
-              });
-            }
-            const formData = batch.students.map((student) => {
-              const csvStudents = csvData.filter((csvStudent) => {
-                return (
-                  csvStudent.name.toLowerCase() ===
-                  student.studentId.name.toLowerCase()
-                );
-              });
-              if (csvStudents.length > 1) {
-                const attendedMin = csvStudents.reduce(
-                  (sum, entry) => sum + parseFloat(entry.attendedMin),
-                  0
-                );
-                return {
-                  studentId: student.studentId._id,
-                  name: student.studentId.name,
-                  attendedType: "online",
-                  status: "present",
-                  attendedMin: attendedMin,
-                };
-              } else if (csvStudents.length === 1) {
-                return {
-                  studentId: student.studentId._id,
-                  name: student.studentId.name,
-                  attendedType: "online",
-                  status: "present",
-                  attendedMin: Number(csvStudents[0].attendedMin),
-                };
-              } else {
-                return {
-                  studentId: student.studentId._id,
-                  name: student.studentId.name,
-                  attendedType: "offline",
-                  attendedMin: 0,
-                  status: "absent",
-                };
-              }
-            });
+// app.post(
+//   "/api/batches/:id/uploadattendace",
+//   upload.single("file"),
+//   (req, res) => {
+//     const { id } = req.params;
+//     csvtojson()
+//       .fromFile(req.file.path)
+//       .then((csvData) => {
+//         Batch.findById(id)
+//           .populate("students.studentId", "name")
+//           .then((batch) => {
+//             if (!batch) {
+//               return res.json({
+//                 success: false,
+//                 message: "Batch not found",
+//                 batchId: id,
+//               });
+//             }
+//             const formData = batch.students.map((student) => {
+//               const csvStudents = csvData.filter((csvStudent) => {
+//                 return (
+//                   csvStudent.name.toLowerCase() ===
+//                   student.studentId.name.toLowerCase()
+//                 );
+//               });
+//               if (csvStudents.length > 1) {
+//                 const attendedMin = csvStudents.reduce(
+//                   (sum, entry) => sum + parseFloat(entry.attendedMin),
+//                   0
+//                 );
+//                 return {
+//                   studentId: student.studentId._id,
+//                   name: student.studentId.name,
+//                   attendedType: "online",
+//                   status: "present",
+//                   attendedMin: attendedMin,
+//                 };
+//               } else if (csvStudents.length === 1) {
+//                 return {
+//                   studentId: student.studentId._id,
+//                   name: student.studentId.name,
+//                   attendedType: "online",
+//                   status: "present",
+//                   attendedMin: Number(csvStudents[0].attendedMin),
+//                 };
+//               } else {
+//                 return {
+//                   studentId: student.studentId._id,
+//                   name: student.studentId.name,
+//                   attendedType: "offline",
+//                   attendedMin: 0,
+//                   status: "absent",
+//                 };
+//               }
+//             });
 
-            const presentStudents = formData.filter((data) => {
-              return data.status === "present";
-            });
+//             const presentStudents = formData.filter((data) => {
+//               return data.status === "present";
+//             });
 
-            if (presentStudents.length === 0) {
-              return res.json({
-                success: false,
-                message: "No present students found",
-                batchId: id,
-              });
-            }
+//             if (presentStudents.length === 0) {
+//               return res.json({
+//                 success: false,
+//                 message: "No present students found",
+//                 batchId: id,
+//               });
+//             }
 
-            res.json({
-              success: true,
-              message: "Data Success",
-              batchId: id,
-              formData: formData,
-            });
-          });
-      })
-      .catch((err) => {
-        console.error(err);
-        res.json({ success: false, message: "Internal server error" });
-      });
-  }
-);
+//             res.json({
+//               success: true,
+//               message: "Data Success",
+//               batchId: id,
+//               formData: formData,
+//             });
+//           });
+//       })
+//       .catch((err) => {
+//         console.error(err);
+//         res.json({ success: false, message: "Internal server error" });
+//       });
+//   }
+// );
 // Attendance Report Tab
 app.get("/api/batches/:id/attendanceReports", (req, res) => {
   const { id } = req.params;
