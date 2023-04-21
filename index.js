@@ -2,7 +2,7 @@ const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const multer = require("multer");
+// const multer = require("multer");
 const csvtojson = require("csvtojson");
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -13,7 +13,7 @@ app.use(cors());
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const upload = multer({ dest: "uploadsa/" });
+// const upload = multer({ dest: "uploadsa/" });
 
 app.use(express.static(path.join(__dirname, "./client/build")));
 app.get("*", function (_, res) {
