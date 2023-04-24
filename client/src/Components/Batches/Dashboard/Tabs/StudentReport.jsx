@@ -3,7 +3,7 @@ import { Empty } from "antd";
 
 import { useParams } from "react-router-dom";
 import CalenderContainer from "./CalenderContainer";
-import axios from "axios";
+import axios from "../../../../config/axios";
 
 const StudentReport = (props) => {
   const params = useParams();

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import EditStudent from "./EditStudent";
-// import axios from "axios";
 
 const StudentTable = (props) => {
   const { name, type, _id, email, mobileNo, editStudent /*removeStudent*/ } =

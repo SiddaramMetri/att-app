@@ -1,5 +1,6 @@
+import axios from "../../config/axios";
 import StudentForm from "./StudentForm";
-import axios from "axios";
+
 const AddStudent = (props) => {
   const { addStudent } = props;
 

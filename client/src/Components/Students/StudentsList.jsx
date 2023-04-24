@@ -1,6 +1,6 @@
-import { Empty } from "antd";
+import { Empty, Result } from "antd";
 import StudentTable from "./StudentTable";
-import axios from "axios";
+import axios from "../../config/axios";
 
 const StudentsList = (props) => {
   const {
@@ -19,8 +19,6 @@ const StudentsList = (props) => {
       .get(`/api/search?text=${result}`)
       .then((res) => {
         const result = res.data;
-
-        console.log(result);
         searchStudents(result);
       })
       .catch((err) => {
@@ -66,7 +64,7 @@ const StudentsList = (props) => {
                 </tr>
               </thead>
               <tbody>
-                {students.map((student, i) => {
+                {/* {students.map((student, i) => {
                   return (
                     <tr key={i}>
                       <StudentTable
@@ -76,7 +74,7 @@ const StudentsList = (props) => {
                       />
                     </tr>
                   );
-                })}
+                })} */}
               </tbody>
             </table>
           </div>

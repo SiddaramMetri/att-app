@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 import StudentsList from "./Students/StudentsList";
 import AddStudent from "./Students/AddStudent";
-import axios from "axios";
+import axios from "../config/axios";
 
 const StudentContainer = (props) => {
   const [students, setStudents] = useState([]);
 
   const [search, setSearch] = useState("");
+  console.log("students", students);
 
   useEffect(() => {
     axios
       .get("/api/students")
       .then((res) => {
         const result = res.data;
-        setStudents(result);
+        // setStudents(result);
+        console.log(result);
       })
       .catch((err) => {
         alert(err.message);

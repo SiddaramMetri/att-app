@@ -7,8 +7,9 @@ import AttendanceUpload from "./Tabs/AttendanceUpload";
 import { useState } from "react";
 import AttendanceReport from "./Tabs/AttendanceReport";
 import Model from "./Tabs/Model";
-import axios from "axios";
+
 import ReactCalendar from "./ReactCalendar";
+import axios from "../../../config/axios";
 
 const TabsContainer = (props) => {
   const {

@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useState } from "react";
+import axios from "../../../../config/axios";
 
 const AttendanceAdd = (props) => {
   const { batchesId, batchesData, addAttendance } = props;

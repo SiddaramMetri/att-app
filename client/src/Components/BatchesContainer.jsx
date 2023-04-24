@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import BatchesList from "./Batches/BatchesList";
 import AddBatches from "./Batches/AddBatche";
-import axios from "axios";
+import axios from "../config/axios";
 
 const BatchesContainer = (props) => {
   const [batches, setBatches] = useState([]);

@@ -1,8 +1,8 @@
 import { Empty } from "antd";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import LiveSessionDisplayTable from "./LiveSessionDisplayTable";
+import axios from "../../../../config/axios";
 
 const LiveSessionDetails = (props) => {
   const params = useParams();

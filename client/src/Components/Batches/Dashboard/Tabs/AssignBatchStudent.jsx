@@ -1,6 +1,6 @@
 import { Table } from "reactstrap";
 import { Empty } from "antd";
-import axios from "axios";
+import axios from "../../../../config/axios";
 
 const AssignBatchStudent = (props) => {
   const { allStudentData, removeAllStudentData, batchesId } = props;

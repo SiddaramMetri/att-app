@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import TabsContainer from "./TabsContainer";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+
 import Error404 from "../ErrorPage/Error404";
 import { toast } from "react-toastify";
+import axios from "../../../config/axios";
 
 const DashboardContainer = (props) => {
   const navigate = useNavigate();

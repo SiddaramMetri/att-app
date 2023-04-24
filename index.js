@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 // const multer = require("multer");
 const csvtojson = require("csvtojson");
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4041;
 const app = express();
 app.use(express.json());
 
@@ -16,6 +16,7 @@ require("dotenv").config();
 // const upload = multer({ dest: "uploadsa/" });
 
 app.use(express.static(path.join(__dirname, "./client/build")));
+
 app.get("*", function (_, res) {
   res.sendFile(
     path.join(__dirname, "./client/build/index.html"),
@@ -27,7 +28,7 @@ app.get("*", function (_, res) {
 
 mongoose
   .connect(
-    "mongodb+srv://metrisiddaram:mZlKtMYEufQ4sq47@cluster0.ykgxben.mongodb.net/attendanceAppV3"
+    `mongodb+srv://metrisiddaram:mZlKtMYEufQ4sq47@cluster0.ykgxben.mongodb.net/attendanceAppV3`
   )
   .then(() => {
     console.log("connected to DB");

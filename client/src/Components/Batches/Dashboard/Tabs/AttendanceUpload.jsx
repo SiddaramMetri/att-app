@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
-import axios from "axios";
+
 import { Empty } from "antd";
+import axios from "../../../../config/axios";
 
 const AttendanceUpload = (props) => {
   const { batchesId, addAttendance, ActiveKeys } = props;

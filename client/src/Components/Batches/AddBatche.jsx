@@ -1,5 +1,5 @@
+import axios from "../../config/axios";
 import BatchesForm from "./BatcheForm";
-import axios from "axios";
 
 const AddBatches = (props) => {
   const { addBatches } = props;
