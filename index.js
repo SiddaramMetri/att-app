@@ -17,18 +17,22 @@ require("dotenv").config();
 
 app.use(express.static(path.join(__dirname, "./client/build")));
 
-app.get("*", function (_, res) {
-  res.sendFile(
-    path.join(__dirname, "./client/build/index.html"),
-    function (err) {
-      res.status(500).send(err);
-    }
-  );
+app.get("*", function (req, res, next) {
+  if (req.url.includes(".html")) {
+    res.sendFile(
+      path.join(__dirname, "./client/build/index.html"),
+      function (err) {
+        res.status(500).send(err);
+      }
+    );
+    return;
+  }
+  next();
 });
 
 mongoose
   .connect(
-    `mongodb+srv://metrisiddaram:mZlKtMYEufQ4sq47@cluster0.ykgxben.mongodb.net/attendanceAppV3`
+    "mongodb+srv://metrisiddaram:mZlKtMYEufQ4sq47@cluster0.ykgxben.mongodb.net/attendanceAppV3"
   )
   .then(() => {
     console.log("connected to DB");
@@ -361,6 +365,7 @@ app.post("/api/attendance", (req, res) => {
     });
 });
 // Attendance check form CSVtoJSON
+
 // Attendance CSVtoJSON and get back
 // app.post(
 //   "/api/batches/:id/uploadattendace",
@@ -450,7 +455,6 @@ app.post("/api/attendance", (req, res) => {
 
 app.post("/api/batches/:id/uploadattendacesss", (req, res) => {
   const { id } = req.params;
-
   const { body } = req;
   Batch.findById(id)
     .populate("students.studentId", "name")

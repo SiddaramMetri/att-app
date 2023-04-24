@@ -11,9 +11,29 @@ const AttendanceAdd = (props) => {
     const attendanceData = {
       studentId: id,
       status: e.target.value,
+      leaveReason: "",
+      attendedType: "none",
+      attendedMin: 0,
     };
-    const updatedAttendance = attendance.filter((ele) => ele.studentId !== id);
-    setAttendance([...updatedAttendance, attendanceData]);
+
+    if (e.target.value === "leave") {
+      const updatedAttendance = attendance.map((ele) =>
+        ele.studentId === id ? attendanceData : ele
+      );
+      setAttendance(updatedAttendance);
+    } else {
+      const updatedAttendance = attendance.filter(
+        (ele) => ele.studentId !== id
+      );
+      setAttendance([...updatedAttendance, attendanceData]);
+    }
+  };
+
+  const handleLeaveReasonChange = (e, id, value) => {
+    const updatedAttendance = attendance.map((ele) =>
+      ele.studentId === id ? { ...ele, leaveReason: value } : ele
+    );
+    setAttendance(updatedAttendance);
   };
 
   const handleSubmitAttendace = (e) => {
@@ -48,7 +68,27 @@ const AttendanceAdd = (props) => {
     }
   };
 
-  const handleLeaveReason = () => {};
+  const handleAttendanceChange = (e, id, status) => {
+    const attendanceData = {
+      studentId: id,
+      status: status,
+    };
+    const updatedAttendance = attendance.filter((ele) => ele.studentId !== id);
+    setAttendance([...updatedAttendance, attendanceData]);
+  };
+
+  const handleAttendanceChangeType = (e, id, type) => {
+    const updatedAttendance = attendance.map((ele) => {
+      if (ele.studentId === id) {
+        return {
+          ...ele,
+          attendedType: type,
+        };
+      }
+      return ele;
+    });
+    setAttendance(updatedAttendance);
+  };
 
   return (
     <div>
@@ -79,73 +119,103 @@ const AttendanceAdd = (props) => {
               </tr>
             </thead>
             <tbody>
-              {batchesData.students.map((Ele, i) => {
+              {batchesData.students.map((data, i) => {
                 const studentAttendance = attendance.find(
-                  (ele) => ele.studentId === Ele.studentId._id
+                  (ele) => ele.studentId === data.studentId._id
                 );
                 const isLeaveSelected =
                   studentAttendance?.attendance === "leave";
 
                 return (
                   <tr key={i}>
-                    <td>{Ele.studentId.name}</td>
-                    <td>{Ele.studentId.type}</td>
-                    <td>{Ele.studentId.email}</td>
-                    <td>{Ele.studentId.mobileNo}</td>
+                    <td>{data.studentId.name}</td>
+                    <td>{data.studentId.type}</td>
+                    <td>{data.studentId.email}</td>
+                    <td>{data.studentId.mobileNo}</td>
                     <td>
                       <input
                         type="radio"
-                        name={`attendance_${Ele.studentId._id}`}
+                        checked={data.status === "present"}
+                        defaultChecked
                         value="present"
-                        checked={attendance.find(
-                          (ele) =>
-                            ele.studentId === Ele.studentId._id &&
-                            ele.attendance === "present"
-                        )}
                         onChange={(e) =>
-                          handleChangeAttendace(e, Ele.studentId._id)
+                          handleAttendanceChange(
+                            e,
+                            data.studentId,
+                            e.target.value
+                          )
                         }
                       />{" "}
                       Present{" "}
                       <input
                         type="radio"
-                        name={`attendance_${Ele.studentId._id}`}
+                        checked={data.status === "absent"}
                         value="absent"
-                        checked={attendance.find(
-                          (ele) =>
-                            ele.studentId === Ele.studentId._id &&
-                            ele.attendance === "absent"
-                        )}
                         onChange={(e) =>
-                          handleChangeAttendace(e, Ele.studentId._id)
+                          handleAttendanceChange(
+                            e,
+                            data.studentId,
+                            e.target.value
+                          )
                         }
                       />{" "}
                       Absent{" "}
                       <input
                         type="radio"
-                        name={`attendance_${Ele.studentId._id}`}
+                        checked={data.status === "leave"}
                         value="leave"
-                        checked={attendance.find(
-                          (ele) =>
-                            ele.studentId === Ele.studentId._id &&
-                            ele.attendance === "leave"
-                        )}
                         onChange={(e) =>
-                          handleChangeAttendace(e, Ele.studentId._id)
+                          handleAttendanceChange(
+                            e,
+                            data.studentId,
+                            e.target.value
+                          )
                         }
                       />{" "}
-                      Leave
-                      {isLeaveSelected && (
-                        <input
-                          type="text"
-                          placeholder="Reason for leave"
-                          value={studentAttendance?.leaveReason}
-                          onChange={(e) =>
-                            handleLeaveReason(e, Ele.studentId._id)
-                          }
-                        />
-                      )}
+                      Leave{" "}
                     </td>
+                    <td>
+                      <input
+                        type="radio"
+                        checked={data.attendedType === "online"}
+                        value="online"
+                        onChange={(e) =>
+                          handleAttendanceChangeType(
+                            e,
+                            data.studentId,
+                            e.target.value
+                          )
+                        }
+                      />{" "}
+                      Online{" "}
+                      <input
+                        type="radio"
+                        checked={data.attendedType === "offline"}
+                        value="offline"
+                        onChange={(e) =>
+                          handleAttendanceChangeType(
+                            e,
+                            data.studentId,
+                            e.target.value
+                          )
+                        }
+                      />{" "}
+                      Offline{" "}
+                      <input
+                        type="radio"
+                        checked={data.attendedType === "none"}
+                        value="none"
+                        onChange={(e) =>
+                          handleAttendanceChangeType(
+                            e,
+                            data.studentId,
+                            e.target.value
+                          )
+                        }
+                      />{" "}
+                      None{" "}
+                    </td>
+                    <td>{(data.attendedMin / 60).toFixed(2)} hours </td>
                   </tr>
                 );
               })}

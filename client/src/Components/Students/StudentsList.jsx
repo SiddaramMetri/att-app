@@ -16,7 +16,9 @@ const StudentsList = (props) => {
     const result = e.target.value;
     setSearch(result);
     axios
-      .get(`/api/search?text=${result}`)
+      .get(`/api/search?text=${result}`, {
+        headers: { "Content-Type": "application/json" },
+      })
       .then((res) => {
         const result = res.data;
         searchStudents(result);
@@ -25,6 +27,8 @@ const StudentsList = (props) => {
         console.log(err);
       });
   };
+
+  console.log(students);
 
   return (
     <div className="p-2 text-center">
@@ -64,7 +68,7 @@ const StudentsList = (props) => {
                 </tr>
               </thead>
               <tbody>
-                {students.map((student, i) => {
+                {students?.map((student, i) => {
                   return (
                     <tr key={i}>
                       <StudentTable

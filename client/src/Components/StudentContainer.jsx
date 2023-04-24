@@ -11,11 +11,13 @@ const StudentContainer = (props) => {
 
   useEffect(() => {
     axios
-      .get("/api/students")
+      .get("/api/students", {
+        headers: { "Content-Type": "application/json" },
+      })
       .then((res) => {
         const result = res.data;
         setStudents(result);
-        // console.log(result);
+        console.log(result);
       })
       .catch((err) => {
         alert(err.message);
