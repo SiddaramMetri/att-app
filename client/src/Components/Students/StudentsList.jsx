@@ -1,4 +1,4 @@
-import { Empty, Result } from "antd";
+import { Empty } from "antd";
 import StudentTable from "./StudentTable";
 import axios from "../../config/axios";
 
@@ -64,7 +64,7 @@ const StudentsList = (props) => {
                 </tr>
               </thead>
               <tbody>
-                {/* {students.map((student, i) => {
+                {students.map((student, i) => {
                   return (
                     <tr key={i}>
                       <StudentTable
@@ -74,7 +74,7 @@ const StudentsList = (props) => {
                       />
                     </tr>
                   );
-                })} */}
+                })}
               </tbody>
             </table>
           </div>

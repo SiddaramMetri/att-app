@@ -14,8 +14,8 @@ const StudentContainer = (props) => {
       .get("/api/students")
       .then((res) => {
         const result = res.data;
-        // setStudents(result);
-        console.log(result);
+        setStudents(result);
+        // console.log(result);
       })
       .catch((err) => {
         alert(err.message);

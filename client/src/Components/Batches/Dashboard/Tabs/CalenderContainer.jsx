@@ -1,27 +1,35 @@
 import React from "react";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
-const CalenderContainer = (props) => {
-  const { events, handleCalendarDateClick } = props;
+import { Calendar, momentLocalizer } from "react-big-calendar";
+import moment from "moment";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+
+moment.locale("en-GB");
+const localizer = momentLocalizer(moment);
+
+export default function CalenderContainer(props) {
+  const { attendanceTab, handleCalendarDateClick } = props;
+  const events = attendanceTab.map((ele) => {
+    return {
+      id: ele._id,
+      date: new Date(ele.attdate),
+      title: `${ele.sessionTitle || "live Session"}  - ${ele.attdate}`,
+      start: new Date(ele.attdate),
+      end: new Date(ele.attdate),
+    };
+  });
+
   return (
-    <div>
-      <FullCalendar
-        plugins={[dayGridPlugin, interactionPlugin]}
-        initialView="dayGridMonth"
-        weekends={true}
+    <div className="App">
+      <Calendar
+        views={["day", "agenda", "work_week", "month"]}
+        selectable
+        localizer={localizer}
+        defaultDate={new Date()}
+        defaultView="month"
         events={events}
-        eventClick={(e) => {
-          console.log(e);
-          handleCalendarDateClick(
-            e.event._def.extendedProps.ids,
-            e.event._def.extendedProps.dates
-          );
-        }}
-        contentHeight={550}
+        style={{ height: "100vh" }}
+        onSelectEvent={(event) => handleCalendarDateClick(event.id)}
       />
     </div>
   );
-};
-
-export default CalenderContainer;
+}

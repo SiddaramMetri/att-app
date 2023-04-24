@@ -11,8 +11,8 @@ const LiveSession = (props) => {
     return {
       ids: ele._id,
       dates: ele.attdate,
-      title: `Live Session - ${ele.attdate.slice(0, 10)}`,
-      start: ele.attdate.slice(0, 10),
+      title: `Live Session - ${ele.attdate}`,
+      start: ele.attdate,
     };
   });
 
@@ -23,6 +23,7 @@ const LiveSession = (props) => {
           <div>
             <CalenderContainer
               events={events}
+              attendanceTab={attendanceTab}
               handleCalendarDateClick={handleCalendarDateClick}
             />
           </div>

@@ -36,7 +36,7 @@ const LiveSessionDisplayTable = (props) => {
             : "yellow";
         return (
           <Tag color={color} key={status}>
-            {status.toUpperCase()}
+            {status}
           </Tag>
         );
       },
@@ -69,7 +69,7 @@ const LiveSessionDisplayTable = (props) => {
             : "yellow";
         return (
           <Tag color={color} key={attendedType}>
-            {attendedType.toUpperCase()}
+            {attendedType}
           </Tag>
         );
       },

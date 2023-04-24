@@ -46,11 +46,11 @@ const AttendanceUpload = (props) => {
   const handleAttendanceChange = (e, id, attendanceStatus) => {
     const updatedFormData = formData.map((data) => {
       if (data.studentId === id) {
-        const newData = {
-          ...data,
-          status: attendanceStatus,
-        };
-        return newData;
+        if (attendanceStatus === "leave") {
+          return { ...data, status: attendanceStatus, leaveReason: "" };
+        } else {
+          return { ...data, status: attendanceStatus };
+        }
       } else {
         return data;
       }
@@ -61,11 +61,18 @@ const AttendanceUpload = (props) => {
   const handleAttendanceChangeType = (e, id, attendanceStatus) => {
     const updatedFormData = formData.map((data) => {
       if (data.studentId === id) {
-        const newData = {
-          ...data,
-          attendedType: attendanceStatus,
-        };
-        return newData;
+        return { ...data, attendedType: attendanceStatus };
+      } else {
+        return data;
+      }
+    });
+    setFormData(updatedFormData);
+  };
+
+  const handleLeaveReasonChange = (e, id, leaveReason) => {
+    const updatedFormData = formData.map((data) => {
+      if (data.studentId === id) {
+        return { ...data, leaveReason };
       } else {
         return data;
       }
@@ -86,7 +93,7 @@ const AttendanceUpload = (props) => {
     };
 
     axios
-      .post("http://localhost:4144/api/attendance", formDatas)
+      .post("/api/attendance", formDatas)
       .then((res) => {
         const result = res.data;
         addAttendance(result);
@@ -226,6 +233,20 @@ const AttendanceUpload = (props) => {
                         }
                       />{" "}
                       Leave{" "}
+                      {data.status === "leave" ? (
+                        <input
+                          type="text"
+                          value={data.leaveReason}
+                          onChange={(e) =>
+                            handleLeaveReasonChange(
+                              e,
+                              data.studentId,
+                              e.target.value
+                            )
+                          }
+                          placeholder="Enter reason for leave"
+                        />
+                      ) : null}
                     </td>
                     <td>
                       <input

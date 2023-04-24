@@ -11,6 +11,7 @@ const DashboardContainer = (props) => {
 
   const params = useParams();
   const batchesId = params.id;
+  const [isChecked, setIsChecked] = useState(false);
 
   const [batchesData, setBatchesData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -26,6 +27,7 @@ const DashboardContainer = (props) => {
   const [attendanceReport, setAttendanceReport] = useState([]);
   // batchStudents
   const [batcheStudents, setBatcheStudents] = useState([]);
+
   // Student
   useEffect(() => {
     axios
@@ -107,6 +109,29 @@ const DashboardContainer = (props) => {
         alert(err.message);
       });
   }, [batchesId, attendanceTab]);
+
+  useEffect(() => {
+    if (isChecked) {
+      axios
+        .get(`/api/batche/${batchesId}/attendanceReport`)
+        .then((res) => {
+          setAttendanceReport(res.data);
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    } else {
+      axios
+        .get(`/api/batches/${batchesId}/attendanceReports`)
+        .then((res) => {
+          setAttendanceReport(res.data);
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    }
+  }, [batchesId, isChecked]);
+
   const removeAllStudentData = (student) => {
     const result = allStudentData.filter((s) => {
       return s._id !== student;
@@ -141,15 +166,8 @@ const DashboardContainer = (props) => {
   };
 
   // student Trace Report
-  const handleTraceStudent = () => {
-    axios
-      .get(`/api/batche/${batchesId}/attendanceReport`)
-      .then((res) => {
-        setAttendanceReport(res.data);
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
+  const handleTraceStudent = (e) => {
+    setIsChecked(e.target.checked);
   };
 
   return (
@@ -163,6 +181,7 @@ const DashboardContainer = (props) => {
               <h3> {batchesData.batchName} Dashboard</h3>
             </div>
             <TabsContainer
+              isChecked={isChecked}
               handleTraceStudent={handleTraceStudent}
               search={search}
               handleChange={handleChange}

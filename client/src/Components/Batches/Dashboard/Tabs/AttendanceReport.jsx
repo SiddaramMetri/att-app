@@ -2,7 +2,7 @@ import { Empty } from "antd";
 import { Link } from "react-router-dom";
 
 const AttendanceReport = (props) => {
-  const { attendanceReport, handleTraceStudent } = props;
+  const { attendanceReport, isChecked, handleTraceStudent } = props;
   return (
     <div>
       <div className="col-md-12">
@@ -14,12 +14,20 @@ const AttendanceReport = (props) => {
           </div>
         ) : (
           <div>
-            <button
+            {/* <button
               className="btn btn-primary btn-sm mb-2"
               onClick={handleTraceStudent}
             >
               Traced students
-            </button>
+            </button> */}
+            <div className="mb-4">
+              <input
+                type="checkbox"
+                checked={isChecked}
+                onChange={(e) => handleTraceStudent(e)}
+              />{" "}
+              Trace Students
+            </div>
             <table className="table table-borded  table-bordered ">
               <thead>
                 <tr>

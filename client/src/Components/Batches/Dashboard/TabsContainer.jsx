@@ -3,16 +3,16 @@ import LiveSession from "./Tabs/LiveSession";
 import BatcheStudents from "./Tabs/BatcheStudents";
 import AssignBatchStudent from "./Tabs/AssignBatchStudent";
 import AttendanceAdd from "./Tabs/AttendanceAdd";
-import AttendanceUpload from "./Tabs/AttendanceUpload";
 import { useState } from "react";
 import AttendanceReport from "./Tabs/AttendanceReport";
 import Model from "./Tabs/Model";
 
-import ReactCalendar from "./ReactCalendar";
 import axios from "../../../config/axios";
+import UploadCSV from "./Tabs/UploadCSV";
 
 const TabsContainer = (props) => {
   const {
+    isChecked,
     handleChange,
     attendanceTab,
     batchesData,
@@ -34,6 +34,7 @@ const TabsContainer = (props) => {
 
   const handleCalendarDateClick = (id, ids) => {
     setIsModalOpen(true);
+
     axios
       .get(`/api/batches/${batchesId}/attendances/${id}`)
       .then((res) => {
@@ -102,13 +103,9 @@ const TabsContainer = (props) => {
     },
     {
       key: "5",
-      label: `Upload Attendance`,
+      label: `Upload the CSV`,
       children: (
-        <AttendanceUpload
-          ActiveKeys={ActiveKeyss}
-          addAttendance={addAttendance}
-          batchesId={batchesId}
-        />
+        <UploadCSV batchesId={batchesId} addAttendance={addAttendance} />
       ),
     },
     {
@@ -116,22 +113,25 @@ const TabsContainer = (props) => {
       label: `AttendanceReport`,
       children: (
         <AttendanceReport
+          isChecked={isChecked}
+          batchesId={batchesId}
+          attendanceTab={attendanceTab}
           handleTraceStudent={handleTraceStudent}
           attendanceReport={attendanceReport}
         />
       ),
     },
-    {
-      key: "7",
-      label: `React Big Calender`,
-      children: (
-        <ReactCalendar
-          handleCalendarDateClick={handleCalendarDateClick}
-          batchesId={batchesId}
-          attendanceTab={attendanceTab}
-        />
-      ),
-    },
+    // {
+    //   key: "7",
+    //   label: `Upload Attendance`,
+    //   children: (
+    //     <AttendanceUpload
+    //       ActiveKeys={ActiveKeyss}
+    //       addAttendance={addAttendance}
+    //       batchesId={batchesId}
+    //     />
+    //   ),
+    // },
   ];
 
   return (

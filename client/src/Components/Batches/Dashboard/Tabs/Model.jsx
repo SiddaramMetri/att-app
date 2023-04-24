@@ -35,7 +35,7 @@ const Model = (props) => {
                       <td>{students.studentId.name}</td>
                       <td>{students.status}</td>
                       <td>{students.attendedType}</td>
-                      <td>{students.attendedMin}</td>
+                      <td>{(students.attendedMin / 60).toFixed(2)} hours </td>
                     </tr>
                   );
                 })}

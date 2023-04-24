@@ -445,6 +445,106 @@ app.post("/api/attendance", (req, res) => {
 //   }
 // );
 
+// textarea to upload CSV file
+// upload the data from CSV to JSON
+
+app.post("/api/batches/:id/uploadattendacesss", (req, res) => {
+  const { id } = req.params;
+
+  const { body } = req;
+  Batch.findById(id)
+    .populate("students.studentId", "name")
+    .then((batch) => {
+      if (!batch) {
+        return res.json({
+          success: false,
+          message: "Batch not found",
+          batchId: id,
+        });
+      }
+
+      // Create a list of all the student names in the CSV file
+      const csvStudentNames = body.map((csvStudent) =>
+        csvStudent.name.toLowerCase()
+      );
+
+      // Create a list of student names in the CSV file that are not enrolled in the batch
+      const notInBatchNames = csvStudentNames.filter(
+        (name) =>
+          !batch.students.find((s) => s.studentId.name.toLowerCase() === name)
+      );
+
+      // Create a `formData` entry for each student not enrolled in the batch
+      const notInBatchData = notInBatchNames.map((name) => ({
+        name: name,
+        attendedType: "unknown",
+        status: "not in batch",
+        attendedMin: 0,
+      }));
+
+      // Create `formData` entries for all enrolled students
+      const enrolledData = batch.students.map((student) => {
+        const csvStudents = body.filter((csvStudent) => {
+          return (
+            csvStudent.name.toLowerCase() ===
+            student.studentId.name.toLowerCase()
+          );
+        });
+        if (csvStudents.length > 1) {
+          const attendedMin = csvStudents.reduce(
+            (sum, entry) => sum + parseFloat(entry.attendedMin),
+            0
+          );
+          return {
+            studentId: student.studentId._id,
+            name: student.studentId.name,
+            attendedType: "online",
+            status: "present",
+            attendedMin: attendedMin,
+          };
+        } else if (csvStudents.length === 1) {
+          return {
+            studentId: student.studentId._id,
+            name: student.studentId.name,
+            attendedType: "online",
+            status: "present",
+            attendedMin: Number(csvStudents[0].attendedMin),
+          };
+        } else {
+          return {
+            studentId: student.studentId._id,
+            name: student.studentId.name,
+            attendedType: "none",
+            attendedMin: 0,
+            status: "absent",
+          };
+        }
+      });
+
+      // Combine the `formData` entries for all students
+      const formData = enrolledData.concat(notInBatchData);
+
+      const presentStudents = formData.filter((data) => {
+        return data.status === "present";
+      });
+
+      if (presentStudents.length === 0) {
+        return res.json({
+          success: false,
+          message: "No present students found",
+          batchId: id,
+        });
+      }
+
+      res.json({
+        success: true,
+        message: "Data Success",
+        batchId: id,
+        formData: formData,
+      });
+    });
+});
+
 // Attendance Report Tab
 app.get("/api/batches/:id/attendanceReports", (req, res) => {
   const { id } = req.params;
